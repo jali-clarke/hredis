@@ -27,7 +27,9 @@ ghc-options:
 - -Werror
 
 library:
-  source-dirs: lib/src
+  source-dirs:
+  - lib/src
+  - client/src
 
 executables:
   hredis-server:
