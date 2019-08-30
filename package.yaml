@@ -22,13 +22,27 @@ description:         Please see the README on GitHub at <https://github.com/gith
 dependencies:
 - base >= 4.7 && < 5
 
+ghc-options:
+- -Wall
+- -Werror
+
 library:
-  source-dirs: src
+  source-dirs: lib/src
 
 executables:
-  hredis-exe:
-    main:                Main.hs
-    source-dirs:         app
+  hredis-cli:
+    main: Main.hs
+    source-dirs: cli/src
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  hredis-server:
+    main: Main.hs
+    source-dirs: server/src
     ghc-options:
     - -threaded
     - -rtsopts
@@ -37,9 +51,79 @@ executables:
     - hredis
 
 tests:
-  hredis-test:
+  cli-unit:
     main:                Spec.hs
-    source-dirs:         test
+    source-dirs:         cli/unit
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  cli-integration:
+    main:                Spec.hs
+    source-dirs:         cli/integration
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  cli-acceptance:
+    main:                Spec.hs
+    source-dirs:         cli/acceptance
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  lib-unit:
+    main:                Spec.hs
+    source-dirs:         lib/unit
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  lib-integration:
+    main:                Spec.hs
+    source-dirs:         lib/integration
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  server-unit:
+    main:                Spec.hs
+    source-dirs:         server/unit
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  server-integration:
+    main:                Spec.hs
+    source-dirs:         server/integration
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - hredis
+
+  server-acceptance:
+    main:                Spec.hs
+    source-dirs:         server/acceptance
     ghc-options:
     - -threaded
     - -rtsopts
