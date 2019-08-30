@@ -53,16 +53,6 @@ tests:
     dependencies:
     - hredis
 
-  client-integration:
-    main:                Spec.hs
-    source-dirs:         client/integration
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - hredis
-
   client-acceptance:
     main:                Spec.hs
     source-dirs:         client/acceptance
@@ -96,16 +86,6 @@ tests:
   server-unit:
     main:                Spec.hs
     source-dirs:         server/unit
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - hredis
-
-  server-integration:
-    main:                Spec.hs
-    source-dirs:         server/integration
     ghc-options:
     - -threaded
     - -rtsopts
