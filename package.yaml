@@ -52,6 +52,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - hredis
+    - hspec
 
   client-acceptance:
     main:                Spec.hs
@@ -62,6 +63,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - hredis
+    - hspec
 
   lib-unit:
     main:                Spec.hs
@@ -72,6 +74,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - hredis
+    - hspec
 
   lib-integration:
     main:                Spec.hs
@@ -82,6 +85,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - hredis
+    - hspec
 
   server-unit:
     main:                Spec.hs
@@ -92,6 +96,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - hredis
+    - hspec
 
   server-acceptance:
     main:                Spec.hs
@@ -102,3 +107,4 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - hredis
+    - hspec
