@@ -30,16 +30,6 @@ library:
   source-dirs: lib/src
 
 executables:
-  hredis-cli:
-    main: Main.hs
-    source-dirs: cli/src
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - hredis
-
   hredis-server:
     main: Main.hs
     source-dirs: server/src
@@ -51,9 +41,9 @@ executables:
     - hredis
 
 tests:
-  cli-unit:
+  client-unit:
     main:                Spec.hs
-    source-dirs:         cli/unit
+    source-dirs:         client/unit
     ghc-options:
     - -threaded
     - -rtsopts
@@ -61,9 +51,9 @@ tests:
     dependencies:
     - hredis
 
-  cli-integration:
+  client-integration:
     main:                Spec.hs
-    source-dirs:         cli/integration
+    source-dirs:         client/integration
     ghc-options:
     - -threaded
     - -rtsopts
@@ -71,9 +61,9 @@ tests:
     dependencies:
     - hredis
 
-  cli-acceptance:
+  client-acceptance:
     main:                Spec.hs
-    source-dirs:         cli/acceptance
+    source-dirs:         client/acceptance
     ghc-options:
     - -threaded
     - -rtsopts
