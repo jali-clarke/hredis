@@ -3,9 +3,10 @@
 import Test.Hspec
 import System.Environment (getEnv)
 
+import Redis
 import RedisClient
 
-withClient :: String -> String -> (RedisClient -> IO ()) -> IO ()
+withClient :: String -> String -> (Socket IO -> IO ()) -> IO ()
 withClient redisHost redisPort action = do
     client <- redisClient redisHost redisPort
     action client

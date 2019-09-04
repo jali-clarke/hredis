@@ -1,22 +1,18 @@
 module RedisClient (
-    RedisClient,
-
     redisClient,
-    closeClient
+    closeClient,
+
+    runWithClient
 ) where
 
-import qualified Network.Socket as N
+import Redis
+import Effects.SocketContext
 
-newtype RedisClient = RedisClient N.Socket
+redisClient :: String -> String -> IO (Socket IO)
+redisClient = undefined
 
-redisClient :: String -> String -> IO RedisClient
-redisClient host port =
-    let hints = N.defaultHints {N.addrSocketType = N.Stream}
-    in do
-        addr : _ <- N.getAddrInfo (Just hints) (Just host) (Just port)
-        socket <- N.socket (N.addrFamily addr) (N.addrSocketType addr) (N.addrProtocol addr)
-        N.connect socket $ N.addrAddress addr
-        pure $ RedisClient socket
+closeClient :: Socket IO -> IO ()
+closeClient = undefined
 
-closeClient :: RedisClient -> IO ()
-closeClient (RedisClient socket) = N.close socket
+runWithClient :: (Redis m, SocketContext n) => m a -> Socket n -> n a
+runWithClient = undefined
