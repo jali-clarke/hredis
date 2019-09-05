@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleContexts, TypeFamilies #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 module Effects.SocketContext (
     SocketContext(..),
@@ -8,10 +8,8 @@ module Effects.SocketContext (
 import qualified Control.Monad.Except as MTL
 import qualified Data.ByteString as B
 
-data SocketContextError = SocketClosed
+data SocketContextError = SocketClosed deriving (Eq, Show)
 
 class MTL.MonadError SocketContextError m => SocketContext m where
-    type Socket m :: *
-
-    readCommunicator :: Socket m -> Int -> m B.ByteString
-    writeCommunicator :: Socket m -> B.ByteString -> m ()
+    readCommunicator :: Int -> m B.ByteString
+    writeCommunicator :: B.ByteString -> m ()
