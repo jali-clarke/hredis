@@ -13,7 +13,7 @@ import qualified Data.ByteString.Lazy as B
 
 import Effects.SocketContext
 
-data SocketBuffers = SocketBuffers B.ByteString B.ByteString
+data SocketBuffers = SocketBuffers {_rx :: B.ByteString, _tx :: B.ByteString}
 newtype MockSocketContext a = MockSocketContext (MTL.StateT SocketBuffers (Either SocketContextError) a)
     deriving (Functor, Applicative, Monad, MTL.MonadState SocketBuffers, MTL.MonadError SocketContextError)
 

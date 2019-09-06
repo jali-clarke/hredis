@@ -16,17 +16,20 @@ import Effects.SocketContext
 import Redis
 import Interpreters.SocketContextInterpreter
 
-buffersFromSocketContext :: (forall m. Redis m => m a) -> SocketBuffers -> Either SocketContextError (a, SocketBuffers)
-buffersFromSocketContext action = runMockSocketContext (asSocketContext action)
+dataFromSocketContext :: (forall m. Redis m => m a) -> SocketBuffers -> Either SocketContextError (a, SocketBuffers)
+dataFromSocketContext action = runMockSocketContext (asSocketContext action)
+
+viewFromSocketContext :: (forall m. Redis m => m a) -> ((a, SocketBuffers) -> b) -> SocketBuffers -> Either SocketContextError b
+viewFromSocketContext action viewFunc = fmap viewFunc . dataFromSocketContext action
 
 valueFromSocketContext :: (forall m. Redis m => m a) -> SocketBuffers -> Either SocketContextError a
-valueFromSocketContext action = fmap (\(a, _) -> a) . buffersFromSocketContext action
+valueFromSocketContext action = viewFromSocketContext action fst
 
 txBufferFromSocketContext :: (forall m. Redis m => m a) -> SocketBuffers -> Either SocketContextError B.ByteString
-txBufferFromSocketContext action = fmap (\(_, (SocketBuffers _ tx)) -> tx) . buffersFromSocketContext action
+txBufferFromSocketContext action = viewFromSocketContext action (_tx . snd)
 
 rxBufferFromSocketContext :: (forall m. Redis m => m a) -> SocketBuffers -> Either SocketContextError B.ByteString
-rxBufferFromSocketContext action = fmap (\(_, (SocketBuffers rx _)) -> rx) . buffersFromSocketContext action
+rxBufferFromSocketContext action = viewFromSocketContext action (_rx . snd)
 
 testSocketContextInterpreter :: Spec
 testSocketContextInterpreter = do
