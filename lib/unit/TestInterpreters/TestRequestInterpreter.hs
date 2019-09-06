@@ -22,3 +22,5 @@ testRequestInterpreter = do
         describe "set" $ do
             it "should translate a set into its serialized request" $
                 asRequest (set "key" "value") `shouldBe` "*3\r\n$3\r\nSET\r\n$3\r\nkey\r\n$5\r\nvalue\r\n"
+            it "should translate a set into its serialized request different key" $
+                asRequest (set "cool" "value") `shouldBe` "*3\r\n$3\r\nSET\r\n$4\r\ncool\r\n$5\r\nvalue\r\n"
