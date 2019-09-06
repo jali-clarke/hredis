@@ -6,10 +6,11 @@ module Effects.SocketContext (
 ) where
 
 import qualified Control.Monad.Except as MTL
-import qualified Data.ByteString as B
+import qualified Data.ByteString.Lazy as B
+import Data.Int
 
 data SocketContextError = SocketClosed deriving (Eq, Show)
 
 class MTL.MonadError SocketContextError m => SocketContext m where
-    readCommunicator :: Int -> m B.ByteString
+    readCommunicator :: Int64 -> m B.ByteString
     writeCommunicator :: B.ByteString -> m ()

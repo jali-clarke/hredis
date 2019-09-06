@@ -9,7 +9,7 @@ module MockSocketContext (
 
 import qualified Control.Monad.Except as MTL
 import qualified Control.Monad.State as MTL
-import qualified Data.ByteString as B
+import qualified Data.ByteString.Lazy as B
 
 import Effects.SocketContext
 

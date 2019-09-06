@@ -2,7 +2,7 @@ module Redis (
     Redis(..)
 ) where
 
-import qualified Data.ByteString as B
+import qualified Data.ByteString.Lazy as B
 
 class Monad m => Redis m where
     get :: B.ByteString -> m (Maybe B.ByteString)
