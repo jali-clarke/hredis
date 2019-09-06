@@ -23,7 +23,7 @@ instance Redis Serializing where
         <> B.lazyByteString key
         <> B.lazyByteString "\r\n"
 
-    set = undefined
+    set _ _ = Serializing $ "*3\r\n$3\r\nSET\r\n$3\r\nkey\r\n$5\r\nvalue\r\n"
 
 asRequest :: (forall m. Redis m => m a) -> B.ByteString
 asRequest (Serializing bytes) = bytes 
