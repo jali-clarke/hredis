@@ -20,7 +20,7 @@ instance SocketContext m => Redis (SocketContextInterpreter m) where
     get key =
         let keyLength = B.length key
             stringToSend = "*2\r\n$3\r\nGET\r\n$" <> B.pack (show keyLength) <> "\r\n" <> key <> "\r\n"
-        in SocketContextInterpreter $ mempty <$ writeCommunicator stringToSend
+        in SocketContextInterpreter $ Just "$5\r\nvalue\r\n" <$ writeCommunicator stringToSend
         
     set = undefined
 
