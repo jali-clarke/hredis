@@ -9,6 +9,7 @@ module Interpreters.SocketContextInterpreter (
 ) where
 
 import Data.Functor (void)
+import Data.Int
 
 import Data.ByteString.Lazy.Char8 (unpack)
 import qualified Data.ByteString.Lazy as B
@@ -37,10 +38,10 @@ instance SocketContext m => Redis (SocketContextInterpreter m) where
         void $ readCommunicator 1
         byteCount <- readUntil (== "\r")
         void $ readCommunicator 1
-        let bytesToParse = read (unpack byteCount)
+        let bytesToParse = read (unpack byteCount) :: Int64
         if bytesToParse == -1
             then pure Nothing
-            else fmap Just (readCommunicator bytesToParse) <* readCommunicator 2
+            else fmap Just (readUntil (== "\r")) <* readCommunicator 1
         
     set = undefined
 
