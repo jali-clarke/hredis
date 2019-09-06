@@ -9,6 +9,6 @@ import TestInterpreters.TestSocketContextInterpreter
 
 testInterpreters :: Spec
 testInterpreters = do
-    describe "test redis monad interpreters" $ do
+    describe "test redis edsl interpreters" $ do
         testSocketContextInterpreter
         testRequestInterpreter
