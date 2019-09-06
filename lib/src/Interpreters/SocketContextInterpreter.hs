@@ -41,7 +41,7 @@ instance SocketContext m => Redis (SocketContextInterpreter m) where
         let bytesToParse = read (unpack byteCount) :: Int64
         if bytesToParse == -1
             then pure Nothing
-            else fmap Just (readUntil (== "\r")) <* readCommunicator 1
+            else fmap Just (readCommunicator bytesToParse) <* readCommunicator 2
         
     set = undefined
 

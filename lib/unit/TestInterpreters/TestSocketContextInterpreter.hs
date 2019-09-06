@@ -46,6 +46,9 @@ testSocketContextInterpreter = do
         it "should receive bytes according to redis protocol from socket when doing a get different response" $ do
             let result = valueFromSocketContext (get "key") (SocketBuffers "$3\r\nbep\r\n" mempty)
             result `shouldBe` Right (Just "bep")
+        it "should receive bytes according to redis protocol from socket when doing a get different response including carriage return" $ do
+            let result = valueFromSocketContext (get "key") (SocketBuffers "$6\r\nbep\ris\r\n" mempty)
+            result `shouldBe` Right (Just "bep\ris")
         it "should consume the whole message sent if valid" $ do
             let result = rxBufferFromSocketContext (get "key_boi") (SocketBuffers "$10\r\n0123456789\r\n" mempty)
             result `shouldBe` Right ""
