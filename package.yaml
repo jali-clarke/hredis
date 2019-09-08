@@ -79,17 +79,6 @@ tests:
     - hredis
     - hspec
 
-  lib-integration:
-    main:                Spec.hs
-    source-dirs:         lib/integration
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - hredis
-    - hspec
-
   server-unit:
     main:                Spec.hs
     source-dirs:         server/unit
