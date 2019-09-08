@@ -57,3 +57,9 @@ testSocketContextInterpreter = do
             it "should write bytes according to redis protocol to socket when doing a set" $ do
                 let result = txBufferFromSocketContext (set "key" "value") (SocketBuffers "+OK\r\n" mempty)
                 result `shouldBe` Right "*3\r\n$3\r\nSET\r\n$3\r\nkey\r\n$5\r\nvalue\r\n"
+            it "should write bytes according to redis protocol to socket when doing a set different key" $ do
+                let result = txBufferFromSocketContext (set "catbox" "value") (SocketBuffers "+OK\r\n" mempty)
+                result `shouldBe` Right "*3\r\n$3\r\nSET\r\n$6\r\ncatbox\r\n$5\r\nvalue\r\n"
+            it "should write bytes according to redis protocol to socket when doing a set different key and value" $ do
+                let result = txBufferFromSocketContext (set "catbox" "") (SocketBuffers "+OK\r\n" mempty)
+                result `shouldBe` Right "*3\r\n$3\r\nSET\r\n$6\r\ncatbox\r\n$0\r\n\r\n"
