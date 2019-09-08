@@ -41,13 +41,7 @@ requestString bytesList =
 instance Redis Serializing where
     get key = requestString ["GET", key]
 
-    set key value = Serializing . B.toLazyByteString $
-        B.lazyByteString "*3\r\n$3\r\nSET\r\n$"
-        <> builderWithReturn (lengthAsBytes key)
-        <> builderWithReturn key
-        <> B.lazyByteString "$"
-        <> builderWithReturn (lengthAsBytes value)
-        <> builderWithReturn value
+    set key value = requestString ["SET", key, value]
 
 asRequest :: (forall m. Redis m => m a) -> B.ByteString
 asRequest (Serializing bytes) = bytes 
