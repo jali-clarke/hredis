@@ -42,7 +42,7 @@ instance SocketContext m => Redis (SocketContextInterpreter m) where
             then pure Nothing
             else fmap Just (readCommunicator bytesToParse) <* readCommunicator 2
         
-    set _ _ = SocketContextInterpreter $ writeCommunicator "*3\r\n$3\r\nSET\r\n$3\r\nkey\r\n$5\r\nvalue\r\n"
+    set _ _ = SocketContextInterpreter $ writeCommunicator $ asRequest (set "key" "value")
 
 asSocketContext :: SocketContext n => (forall m. Redis m => m a) -> n a
 asSocketContext (SocketContextInterpreter action) = action
