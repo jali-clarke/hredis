@@ -1,5 +1,4 @@
 {-# LANGUAGE
-    RankNTypes,
     OverloadedStrings
 #-}
 
@@ -40,8 +39,7 @@ requestString bytesList =
 
 instance Redis Serializing where
     get key = requestString ["GET", key]
-
     set key value = requestString ["SET", key, value]
 
-asRequest :: (forall m. Redis m => m a) -> B.ByteString
+asRequest :: Serializing a -> B.ByteString
 asRequest (Serializing bytes) = bytes 

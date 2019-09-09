@@ -1,7 +1,6 @@
 {-# LANGUAGE
     GeneralizedNewtypeDeriving,
-    OverloadedStrings,
-    RankNTypes
+    OverloadedStrings
 #-}
 
 module Interpreters.SocketContextInterpreter (
@@ -45,5 +44,5 @@ instance SocketContext m => Redis (SocketContextInterpreter m) where
     set key value = SocketContextInterpreter $
         writeCommunicator (asRequest $ set key value) <* readCommunicator 5
 
-asSocketContext :: SocketContext n => (forall m. Redis m => m a) -> n a
+asSocketContext :: SocketContext m => SocketContextInterpreter m a -> m a
 asSocketContext (SocketContextInterpreter action) = action
